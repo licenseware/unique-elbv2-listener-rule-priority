@@ -1,0 +1,40 @@
+name: "Get Unique AWS ELBV2 Listener Rule Priority"
+author: "meysam@licenseware.io"
+description: |
+  Generate random listener rule priorities that can be assigned to new rules
+  defined in a Elastic Load Balancer V2 without having conflict.
+branding:
+  icon: "cloud"
+  color: "yellow"
+inputs:
+  min-priority:
+    required: false
+    default: 1
+  max-priority:
+    required: false
+    default: 50000
+  max-try:
+    required: false
+    default: 10000
+  log-level:
+    required: false
+    default: "error"
+  listener-arn:
+    required: true
+  count:
+    required: false
+    default: 1
+outputs:
+  priorities:
+    description: A comma separated list of priorities as numbers
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - --min-priority=${{ inputs.min-priority }}
+    - --max-priority=${{ inputs.max-priority }}
+    - --max-try=${{ inputs.max-try }}
+    - --log-level=${{ inputs.log-level }}
+    - --listener-arn=${{ inputs.listener-arn }}
+    - ${{ inputs.count }}
