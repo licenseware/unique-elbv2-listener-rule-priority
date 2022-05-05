@@ -1,8 +1,6 @@
 name: "Get Unique AWS ELBV2 Listener Rule Priority"
 author: "meysam@licenseware.io"
-description: |
-  Generate random listener rule priorities that can be assigned to new rules
-  defined in a Elastic Load Balancer V2 without having conflict.
+description: Generate random listener rule priorities for AWS ELBV2 without conflict.
 branding:
   icon: "cloud"
   color: "yellow"
