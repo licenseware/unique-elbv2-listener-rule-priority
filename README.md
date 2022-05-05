@@ -47,7 +47,7 @@ Listener Rule.
 ## Inputs
 
 | Name | Description | Required | Default |
-|------|-------------|------|-------------|
+|------|-------------|----------|---------|
 | listener-arn | The ARN of the ELBv2 Listener to generate the priority for. | true |
 | count | The number of priorities to generate. | false | 1 |
 | min-priority | The minimum priority to use. | false | 1 |
@@ -58,6 +58,6 @@ Listener Rule.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| prioritties | Comma-separated list of generated priorities. |
+| Name | Description | Example |
+|------|-------------|---------|
+| prioritties | Comma-separated list of generated priorities. | 1,2,3 |
