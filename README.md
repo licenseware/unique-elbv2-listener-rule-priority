@@ -52,12 +52,12 @@ consider adding the following step before each of the below approaches:
 
       - name: Get load balancer priorities
         run: |
-          export PRIORITIES=${{ steps.elb-priority.outputs.prioritties }}
+          export PRIORITIES=$(echo ${{ steps.elb-priority.outputs.priorities }})
 
           cat << EOF >> $GITHUB_ENV
-          MYAPP_LB_PR=$(echo $SORTED | awk '{print $1}')
-          YOURAPP_LB_PR=$(echo $SORTED | awk '{print $2}')
-          HISAPP_LB_PR=$(echo $SORTED | awk '{print $3}')
+          MYAPP_LB_PR=$(echo $PRIORITIES | awk '{print $1}')
+          YOURAPP_LB_PR=$(echo $PRIORITIES | awk '{print $2}')
+          HISAPP_LB_PR=$(echo $PRIORITIES | awk '{print $3}')
           EOF
 
       - uses: aws-actions/aws-cloudformation-github-deploy@v1
