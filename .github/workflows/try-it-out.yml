@@ -1,0 +1,34 @@
+name: Playground
+
+on:
+  push:
+
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
+        name: Get unique listerner rule priority
+        id: elb-priority
+        with:
+          listener-arn: ${{ secrets.TEST_LOAD_BALANCER_LISTENER_ARN }}
+          sorted: true
+          delimiter: " "
+          count: 3
+
+      - name: Get load balancer priorities
+        run: |
+          export PRIORITIES=${{ steps.elb-priority.outputs.prioritties }}
+
+          cat << EOF >> $GITHUB_ENV
+          MYAPP_LB_PR=$(echo $SORTED | awk '{print $1}')
+          YOURAPP_LB_PR=$(echo $SORTED | awk '{print $2}')
+          HISAPP_LB_PR=$(echo $SORTED | awk '{print $3}')
+          EOF
+
+      - name: Test it out
+        run: |
+          echo ${{ env.MYAPP_LB_PR }}
+          echo ${{ env.YOURAPP_LB_PR }}
+          echo ${{ env.HISAPP_LB_PR }}
