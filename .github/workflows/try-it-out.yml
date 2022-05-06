@@ -3,16 +3,23 @@ name: Playground
 on:
   push:
 
-
 jobs:
   build-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.REGION }}
+
+      - uses: licenseware/unique-elbv2-listener-rule-priority@meysam/sort-result-and-customize-delimiter
         name: Get unique listerner rule priority
         id: elb-priority
         with:
-          listener-arn: ${{ secrets.TEST_LOAD_BALANCER_LISTENER_ARN }}
+          listener-arn: ${{ secrets.LOAD_BALANCER_LISTENER_ARN }}
           sorted: true
           delimiter: " "
           count: 3
