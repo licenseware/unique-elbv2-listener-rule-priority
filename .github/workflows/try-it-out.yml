@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  build-image:
+  playground:
     runs-on: ubuntu-latest
     steps:
       - name: Configure AWS credentials
@@ -29,9 +29,9 @@ jobs:
           export PRIORITIES=${{ steps.elb-priority.outputs.prioritties }}
 
           cat << EOF >> $GITHUB_ENV
-          MYAPP_LB_PR=$(echo $SORTED | awk '{print $1}')
-          YOURAPP_LB_PR=$(echo $SORTED | awk '{print $2}')
-          HISAPP_LB_PR=$(echo $SORTED | awk '{print $3}')
+          MYAPP_LB_PR=$(echo $PRIORITIES | awk '{print $1}')
+          YOURAPP_LB_PR=$(echo $PRIORITIES | awk '{print $2}')
+          HISAPP_LB_PR=$(echo $PRIORITIES | awk '{print $3}')
           EOF
 
       - name: Test it out
