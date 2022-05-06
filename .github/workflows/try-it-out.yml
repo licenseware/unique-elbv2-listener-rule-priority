@@ -26,7 +26,7 @@ jobs:
 
       - name: Get load balancer priorities
         run: |
-          export PRIORITIES=${{ steps.elb-priority.outputs.prioritties }}
+          export PRIORITIES=$(echo ${{ steps.elb-priority.outputs.priorities }})
 
           cat << EOF >> $GITHUB_ENV
           MYAPP_LB_PR=$(echo $PRIORITIES | awk '{print $1}')
