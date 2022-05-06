@@ -22,7 +22,7 @@ consider adding the following step before each of the below approaches:
 ### Produce only one priority
 
 ```yaml
-      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
+      - uses: licenseware/unique-elbv2-listener-rule-priority@v1.1
         name: Get unique listerner rule priority
         id: elb-priority
         with:
@@ -41,7 +41,7 @@ consider adding the following step before each of the below approaches:
 ### Produce multiple priorities
 
 ```yaml
-      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
+      - uses: licenseware/unique-elbv2-listener-rule-priority@v1.1
         name: Get unique listerner rule priority
         id: elb-priority
         with:
