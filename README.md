@@ -19,6 +19,31 @@ consider adding the following step before each of the below approaches:
           aws-region: ${{ env.REGION }}
 ```
 
+For this to work, you also need a user with (at least) the following policies
+(hopefully in a cloud formation template):
+
+```yaml
+  GitHubActionsUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Ref GitHubActionsUserName
+
+  # The permissions that the GitHub Actions deployment workflow will have
+  GitHubActionsUserPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      Users:
+        - !Ref GitHubActionsUser
+      PolicyName: allow-github-actions-cloudformation-deploy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action:
+              - "elasticloadbalancing:DescribeRules"
+            Effect: Allow
+            Resource: "*"
+```
+
 ### Produce only one priority
 
 ```yaml
