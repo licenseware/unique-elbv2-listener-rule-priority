@@ -17,6 +17,12 @@ inputs:
   log-level:
     required: false
     default: "error"
+  sorted:
+    required: false
+    default: true
+  delimiter:
+    required: false
+    default: ","
   listener-arn:
     required: true
   count:
@@ -34,5 +40,7 @@ runs:
     - --max-priority=${{ inputs.max-priority }}
     - --max-try=${{ inputs.max-try }}
     - --log-level=${{ inputs.log-level }}
+    - --sorted=${{ inputs.sorted }}
+    - --delimiter=${{ inputs.delimiter }}
     - --listener-arn=${{ inputs.listener-arn }}
     - ${{ inputs.count }}

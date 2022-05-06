@@ -5,10 +5,25 @@ Listener Rule.
 
 ## Usage
 
+### Prerequisites
+
+For each kind of run, you will need to configure the credentials first, so
+consider adding the following step before each of the below approaches:
+
+```yaml
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+```
+
 ### Produce only one priority
 
 ```yaml
-      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
+      - uses: licenseware/unique-elbv2-listener-rule-priority@v1.1
+        name: Get unique listerner rule priority
         id: elb-priority
         with:
           listener-arn: ${{ secrets.LOAD_BALANCER_LISTENER_ARN }}
@@ -26,11 +41,24 @@ Listener Rule.
 ### Produce multiple priorities
 
 ```yaml
-      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
+      - uses: licenseware/unique-elbv2-listener-rule-priority@v1.1
+        name: Get unique listerner rule priority
         id: elb-priority
         with:
           listener-arn: ${{ secrets.LOAD_BALANCER_LISTENER_ARN }}
+          sorted: true
+          delimiter: " "
           count: 3
+
+      - name: Get load balancer priorities
+        run: |
+          export PRIORITIES=$(echo ${{ steps.elb-priority.outputs.priorities }})
+
+          cat << EOF >> $GITHUB_ENV
+          MYAPP_LB_PR=$(echo $PRIORITIES | awk '{print $1}')
+          YOURAPP_LB_PR=$(echo $PRIORITIES | awk '{print $2}')
+          HISAPP_LB_PR=$(echo $PRIORITIES | awk '{print $3}')
+          EOF
 
       - uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
@@ -39,9 +67,9 @@ Listener Rule.
           no-fail-on-empty-changeset: "1"
           role-arn: ${{ secrets.CLOUD_FORMATION_ROLE_ARN }}
           parameter-overrides: >-
-            MyAppLBPriority=${{ steps.elb-priority.outputs.prioritties | cut -d',' -f1 }},
-            YourAppLBPriority=${{ steps.elb-priority.outputs.prioritties | cut -d',' -f2 }}},
-            HisAppLBPriority=${{ steps.elb-priority.outputs.prioritties | cut -d',' -f3 }}
+            MyAppLBPriority=${{ env.MYAPP_LB_PR }},
+            YourAppLBPriority=${{ env.YOURAPP_LB_PR }},
+            HisAppLBPriority=${{ env.HISAPP_LB_PR }}
 ```
 
 ## Inputs
@@ -54,7 +82,8 @@ Listener Rule.
 | max-priority | The maximum priority to use. | false | 50000 |
 | max-try | The maximum number of tries to generate a unique priority. | false | 10000 |
 | log-level | The log level to use. | false | error |
-
+| sorted | Whether to sort the resulting priorities. | false | true |
+| delimiter | The delimiter to use on the resulting the priorities. | false | " " |
 
 ## Outputs
 
