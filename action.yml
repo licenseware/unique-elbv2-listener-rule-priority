@@ -28,6 +28,9 @@ inputs:
   count:
     required: false
     default: 1
+  output-mode:
+    required: false
+    default: "a"
 outputs:
   priorities:
     description: A comma separated list of priorities as numbers
@@ -43,4 +46,5 @@ runs:
     - --sorted=${{ inputs.sorted }}
     - --delimiter=${{ inputs.delimiter }}
     - --listener-arn=${{ inputs.listener-arn }}
-    - ${{ inputs.count }}
+    - --count=${{ inputs.count }}
+    - --mode=${{ inputs.output-mode }}
