@@ -1,13 +1,12 @@
-FROM python:3.10-alpine
+FROM python:3.11-alpine
 
 LABEL author="Meysam Azad <meysam@licenseware.io>"
 
 ENV PYTHONUNBUFFERED=1
 
-RUN pip install -U pip
+COPY requirements.txt .
 
-COPY . .
+RUN pip install -Ur requirements.txt pip
 
-RUN pip install -r requirements.txt
-
+COPY main.py .
 ENTRYPOINT ["/main.py"]

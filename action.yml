@@ -43,4 +43,4 @@ runs:
     - --sorted=${{ inputs.sorted }}
     - --delimiter=${{ inputs.delimiter }}
     - --listener-arn=${{ inputs.listener-arn }}
-    - ${{ inputs.count }}
+    - --count=${{ inputs.count }}
