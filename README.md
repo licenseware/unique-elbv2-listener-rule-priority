@@ -60,7 +60,7 @@ For this to work, you also need a user with (at least) the following policies
           no-fail-on-empty-changeset: "1"
           role-arn: ${{ secrets.CLOUD_FORMATION_ROLE_ARN }}
           parameter-overrides: >-
-            MyAppLBPriority=${{ steps.elb-priority.outputs.prioritties }}
+            MyAppLBPriority=${{ steps.elb-priority.outputs.priorities }}
 ```
 
 ### Produce multiple priorities
@@ -114,4 +114,4 @@ For this to work, you also need a user with (at least) the following policies
 
 | Name | Description | Example |
 |------|-------------|---------|
-| prioritties | Comma-separated list of generated priorities. | 1,2,3 |
+| priorities | Comma-separated list of generated priorities. | 1,2,3 |
