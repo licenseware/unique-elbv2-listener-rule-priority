@@ -47,7 +47,7 @@ For this to work, you also need a user with (at least) the following policies
 ### Produce only one priority
 
 ```yaml
-      - uses: licenseware/unique-elbv2-listener-rule-priority@v1.1
+      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
         name: Get unique listerner rule priority
         id: elb-priority
         with:
@@ -66,7 +66,7 @@ For this to work, you also need a user with (at least) the following policies
 ### Produce multiple priorities
 
 ```yaml
-      - uses: licenseware/unique-elbv2-listener-rule-priority@v1.1
+      - uses: licenseware/unique-elbv2-listener-rule-priority@v1
         name: Get unique listerner rule priority
         id: elb-priority
         with:
