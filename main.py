@@ -17,6 +17,7 @@ DEFAULT_MAX_TRY = 10_000
 DEFAULT_LOG_LEVEL = "error"
 # ref: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 DEFAULT_OUTPUT_FILE = os.getenv("GITHUB_OUTPUT") or sys.stdout
+DEFAULT_OUTPUT_FILE_MODE = "a"
 DEFAULT_COUNT = 1
 
 logger = logging.getLogger(__name__)
@@ -78,6 +79,13 @@ parser.add_argument(
     default=DEFAULT_OUTPUT_FILE,
     help=f"Defaults to '{DEFAULT_OUTPUT_FILE}'",
 )
+parser.add_argument(
+    "-m",
+    "--mode",
+    type=str,
+    default=DEFAULT_OUTPUT_FILE_MODE,
+    help=f"Defaults to '{DEFAULT_OUTPUT_FILE_MODE}'",
+)
 
 parser.add_argument("--listener-arn", type=str, required=True)
 parser.add_argument(
@@ -119,10 +127,12 @@ def is_file(output: str) -> bool:
     return isinstance(output, str) and os.path.isfile(output)
 
 
-def output_result(priorities: list[int], delimiter: str, output: str):
+def output_result(
+    priorities: list[int], delimiter: str, output: str, output_file_mode: str
+):
     value = delimiter.join(map(str, priorities))
     if is_file(output):
-        with open(output, "a") as f:
+        with open(output, output_file_mode) as f:
             print(f"priorities={value}", file=f, flush=True)
     else:
         print(f"priorities={value}", file=output, flush=True)
@@ -157,4 +167,9 @@ if __name__ == "__main__":
     logger.debug("New priorities:")
     logger.debug(pformat(new_priorities))
 
-    output_result(new_priorities, delimiter=args.delimiter, output=args.output)
+    output_result(
+        new_priorities,
+        delimiter=args.delimiter,
+        output=args.output,
+        output_file_mode=args.mode,
+    )
