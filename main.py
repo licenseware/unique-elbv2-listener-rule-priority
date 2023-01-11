@@ -11,9 +11,9 @@ from random import randint, seed
 import boto3
 
 DEFAULT_DELIMITER = ","
-DEFAULT_MIN_PRIORITY = 1
-DEFAULT_MAX_PRIORITY = 50_000
-DEFAULT_MAX_TRY = 10_000
+DEFAULT_MIN_PRIORITY = -1_000
+DEFAULT_MAX_PRIORITY = 1_000
+DEFAULT_MAX_TRY = 10
 DEFAULT_LOG_LEVEL = "error"
 # ref: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 DEFAULT_OUTPUT_FILE = os.getenv("GITHUB_OUTPUT") or sys.stdout
