@@ -103,12 +103,12 @@ For this to work, you also need a user with (at least) the following policies
 |------|-------------|----------|---------|
 | listener-arn | The ARN of the ELBv2 Listener to generate the priority for. | true |
 | count | The number of priorities to generate. | false | 1 |
-| min-priority | The minimum priority to use. | false | 1 |
-| max-priority | The maximum priority to use. | false | 50000 |
-| max-try | The maximum number of tries to generate a unique priority. | false | 10000 |
+| min-priority | The minimum priority to use. | false | -1000 |
+| max-priority | The maximum priority to use. | false | 1000 |
+| max-try | The maximum number of tries to generate a unique priority. | false | 10 |
 | log-level | The log level to use. | false | error |
 | sorted | Whether to sort the resulting priorities. | false | true |
-| delimiter | The delimiter to use on the resulting the priorities. | false | " " |
+| delimiter | The delimiter to use on the resulting the priorities. | false | "," |
 
 ## Outputs
 

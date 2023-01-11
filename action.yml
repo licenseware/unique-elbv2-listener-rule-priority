@@ -7,13 +7,13 @@ branding:
 inputs:
   min-priority:
     required: false
-    default: 1
+    default: -1000
   max-priority:
     required: false
-    default: 50000
+    default: 1000
   max-try:
     required: false
-    default: 10000
+    default: 10
   log-level:
     required: false
     default: "error"
