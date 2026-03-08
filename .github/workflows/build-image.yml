@@ -30,7 +30,7 @@ jobs:
           logout: false
 
       - name: Build image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v7
         env:
           IMAGE_TAG: ${{ env.REGISTRY }}/${{ github.repository }}:latest
         with:
